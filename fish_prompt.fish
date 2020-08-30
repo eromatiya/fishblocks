@@ -68,11 +68,11 @@ end
 # Distro name
 function _distro_name
 	set distro_name
-	if test -f /etc/os-release && test -z $distro_name
-		set distro_name (cat /etc/os-release | awk 'NR==1' | awk -F '"' '{print $2}')
+	if test -f "/etc/os-release" && test -z $distro_name
+		set distro_name (cat "/etc/os-release" | awk 'NR==1' | awk -F '"' '{print $2}')
 	end
-	if test -f /etc/lib/os-release && test -z $distro_name
-		set distro_name (cat /etc/lib/os-release | awk 'NR==1' | awk -F '"' '{print $2}')
+	if test -f "/usr/lib/os-release" && test -z $distro_name
+		set distro_name (cat "/usr/lib/os-release" | awk 'NR==1' | awk -F '"' '{print $2}')
 	end
 	if [ (command -v lsb_release) ] && test -z $distro_name
 		set distro_name (lsb_release -i)
