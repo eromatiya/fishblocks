@@ -3,7 +3,7 @@ A dead simple fishshell prompt.
 
 | Fishblocks Preview |
 | --- |
-| [Preview](fishblock.gif) |
+| ![Preview](fishblock.gif) |
 
 ## Dependencies
 
