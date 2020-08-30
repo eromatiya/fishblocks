@@ -67,8 +67,19 @@ end
 
 # Distro name
 function _distro_name
-	set distro_name (find /etc/ -maxdepth 1 -name '*release' 2> /dev/null |
-		sed 's/\/etc\///' | sed 's/-release//' | head -1)
+	set distro_name
+	if test -f /etc/os-release && test -z $distro_name
+		set distro_name (cat /etc/os-release | awk 'NR==1' | awk -F '"' '{print $2}')
+	end
+	if test -f /etc/lib/os-release && test -z $distro_name
+		set distro_name (cat /etc/lib/os-release | awk 'NR==1' | awk -F '"' '{print $2}')
+	end
+	if [ (command -v lsb_release) ] && test -z $distro_name
+		set distro_name (lsb_release -i)
+	end
+	if test -z $distro_name
+		set distro_name "unknown"
+	end
 	set distro_name (string lower $distro_name)
 	echo $distro_name
 end
