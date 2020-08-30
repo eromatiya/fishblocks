@@ -68,13 +68,13 @@ end
 # Distro name
 function _distro_name
 	set distro_name
-	if test -f "/etc/os-release" && test -z $distro_name
-		set distro_name (cat "/etc/os-release" | awk 'NR==1' | awk -F '"' '{print $2}')
+	if test -z $distro_name && test -r "/etc/os-release"
+		set distro_name (awk -F '=' '$1=="ID" { print $2 ;}' "/etc/os-release")
 	end
-	if test -f "/usr/lib/os-release" && test -z $distro_name
-		set distro_name (cat "/usr/lib/os-release" | awk 'NR==1' | awk -F '"' '{print $2}')
+	if test -z $distro_name && test -r "/usr/lib/os-release"
+		set distro_name (awk -F '=' '$1=="ID" { print $2 ;}' "/usr/lib/os-release")
 	end
-	if [ (command -v lsb_release) ] && test -z $distro_name
+	if test -z $distro_name && [ (command -v lsb_release) ]
 		set distro_name (lsb_release -i)
 	end
 	if test -z $distro_name
@@ -87,34 +87,52 @@ end
 # Distro icon
 function _distro_icon
 	switch (_distro_name)
-		case '*'arch'*'
+		case '*arch*'
 			set icon '  '
-		case '*'debian'*'
+		case '*debian*'
 			set icon '  '
-		case '*'ubuntu'*'
+		case '*ubuntu*'
 			set icon '  '
-		case '*'manjaro'*'
-			set icon '  '
-		case '*'centos'*'
-			set icon '  '
-		case '*'fedora'*'
-			set icon '  '
-		case '*'mint'*'
+		case '*raspbian*'
+			set icon '  '
+		case '*mint*'
 			set icon '  '
-		case '*'alpine'*'
-			set icon '  '
-		case '*'devuan'*'
-			set icon '  '
-		case '*'opensuse'*'
-			set icon '  '
-		case '*'slackware'*'
-			set icon '  '
-		case '*'redhat'*'
-			set icon '  '
-		case '*'elementary'*'
+		case '*manjaro*'
+			set icon '  '
+		case '*elementary*'
 			set icon '  '
+		case '*fedora*'
+			set icon '  '
+		case '*coreos*'
+			set icon '  '
+		case '*gentoo*'
+			set icon '  '
+		case '*centos*'
+			set icon '  '
+		case '*mageia*'
+			set icon '  '
+		case '*opensuse*' '*tumbleweed*'
+			set icon '  '
+		case '*sabayon*'
+			set icon '  '
+		case '*slackware*'
+			set icon '  '
+		case '*alpine*'
+			set icon '  '
+		case '*devuan*'
+			set icon '  '
+		case '*redhat*'
+			set icon '  '
+		case '*aosc*'
+			set icon '  '
+		case '*nixos*'
+			set icon '  '
+		case '*void*'
+			set icon '  '
+		case '*artix*'
+			set icon '  '
 		case "*"
-			set icon '  '
+			set icon '  '
 	end
 	echo $icon
 end
@@ -127,10 +145,12 @@ function _os_icon
 			set icon (_distro_icon)
 		case darwin
 			set icon '  '
-		case msys win32
+		case CYGWIN_NT-'*' MSYS_NT-'*'
 			set icon '  '
-		case freebsd
+		case freebsd openbsd dragonfly
 			set icon '  '
+		case sunos '  '
+			set icon 
 		case "*"
 			set icon '  '
 	end
