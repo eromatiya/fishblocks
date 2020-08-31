@@ -35,34 +35,34 @@ The colors may vary due to the difference of our terminal colors. Here's mine if
 ```
 # Black
 color10		#3D4C5F
-color8			#56687E
+color8		#56687E
 
 # Red
-color1			#EE4F84
-color9			#F48FB1
+color1		#EE4F84
+color9		#F48FB1
 
 # Green
-color2			#53E2AE
+color2		#53E2AE
 color10		#A1EFD3
 
 # Yellow
-color3			#F1FF52
+color3 		#F1FF52
 color11		#F1FA8C
 
 # Blue
-color4			#6498EF
+color4		#6498EF
 color12		#92B6F4
 
 # Magenta
-color5			#985EFF
+color5		#985EFF
 color13		#BD99FF
 
 # Cyan
-color6			#24D1E7
+color6		#24D1E7
 color14		#87DFEB
 
 # White
-color7			#E5E5E5
+color7		#E5E5E5
 color15		#F8F8F2
 ```
 
