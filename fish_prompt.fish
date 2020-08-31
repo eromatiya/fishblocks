@@ -14,6 +14,11 @@ function _git_dirty -d 'Checks if git is dirty'
 	echo (command git status -s --ignore-submodules=dirty ^/dev/null)
 end
 
+# Is git has untracked files?
+function _git_untracked -d 'Checks if git has untracked files'
+	echo (command git status -s --ignore-submodules=untracked ^/dev/null)
+end
+
 # Is PWD a git directory?
 function _git_directory -d 'Checks if $PWD is a git repository'
 	if git rev-parse --git-dir > /dev/null 2>&1
@@ -25,7 +30,7 @@ end
 function _git_status -d 'Returns color based on the previous command status'
 	if [ (_git_directory) ]
 		# Check if dirty
-		if [ (_git_dirty) ]
+		if [ (_git_dirty) ] || [ (_git_untracked) ]
 			set git_color yellow
 		else
 			set git_color green
@@ -69,17 +74,17 @@ end
 # Distro name
 function _distro_name -d 'Returns linux distribution name'
 	set distro_name
-	if test -z $distro_name && test -r "/etc/os-release"
-		set distro_name (awk -F '=' '$1=="ID" { print $2 ;}' "/etc/os-release")
+	if test -z $distro_name && test -r /etc/os-release
+		set distro_name (awk -F '=' '$1=="ID" { print $2 ;}' /etc/os-release)
 	end
-	if test -z $distro_name && test -r "/usr/lib/os-release"
-		set distro_name (awk -F '=' '$1=="ID" { print $2 ;}' "/usr/lib/os-release")
+	if test -z $distro_name && test -r /usr/lib/os-release
+		set distro_name (awk -F '=' '$1=="ID" { print $2 ;}' /usr/lib/os-release)
 	end
 	if test -z $distro_name && [ (command -v lsb_release) ]
 		set distro_name (lsb_release -i)
 	end
 	if test -z $distro_name
-		set distro_name "unknown"
+		set distro_name 'unknown'
 	end
 	set distro_name (string lower $distro_name)
 	echo $distro_name
