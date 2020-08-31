@@ -8,6 +8,7 @@ A dead simple fishshell prompt.
 ## Dependencies
 
 + `fish > 3.1.0`
++ `git`
 + A nerd font. `MesloLGS NF` is recommended.
 
 ## Usage
