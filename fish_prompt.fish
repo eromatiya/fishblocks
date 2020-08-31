@@ -1,8 +1,9 @@
-# ░░█░░▀▄░░░▄▀░▄▀░░▄▀░░▄▀░░▀░▀▄░░░░█▀█░█▀▄░█▀█░█▄█░█▀█░▀█▀
-# ░░█░░░▄▀░▀▄░░█░░░█░░░█░░░░░░▄▀░░░█▀▀░█▀▄░█░█░█░█░█▀▀░░█░
-# ░░▀░░▀░░░░░▀░░▀░░░▀░░░▀░░░░▀░░░░░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░
+# ░█▀▀░▀█▀░█▀▀░█░█░█▀▄░█░░░█▀█░█▀▀░█░█░█▀▀
+# ░█▀▀░░█░░▀▀█░█▀█░█▀▄░█░░░█░█░█░░░█▀▄░▀▀█
+# ░▀░░░▀▀▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 #
-# Prompt made by manilarome
+# A dead simple fishshell prompt
+# Created by Gerome Matilla
 
 # ░█░█░█▀▀░█░░░█▀█░█▀▀░█▀▄░█▀▀
 # ░█▀█░█▀▀░█░░░█▀▀░█▀▀░█▀▄░▀▀█
@@ -87,29 +88,52 @@ end
 # Distro icon
 function _distro_icon -d 'Returns linux distribution icon'
 	switch (_distro_name)
-		case '*arch*';				set icon ''
-		case '*debian*';				set icon ''
-		case '*ubuntu*';				set icon ''
-		case '*raspbian*';				set icon ''
-		case '*mint*';				set icon ''
-		case '*manjaro*';				set icon ''
-		case '*elementary*';				set icon ''
-		case '*fedora*';				set icon ''
-		case '*coreos*';				set icon ''
-		case '*gentoo*';				set icon ''
-		case '*centos*';				set icon ''
-		case '*mageia*';				set icon ''
-		case '*opensuse*' '*tumbleweed*';				set icon ''
-		case '*sabayon*';				set icon ''
-		case '*slackware*';				set icon ''
-		case '*alpine*';				set icon ''
-		case '*devuan*';				set icon ''
-		case '*redhat*';				set icon ''
-		case '*aosc*';				set icon ''
-		case '*nixos*';				set icon ''
-		case '*void*';				set icon ''
-		case '*artix*';				set icon ''
-		case '*';				set icon ''
+		case '*arch*'
+			set icon ''
+		case '*debian*'
+			set icon ''
+		case '*ubuntu*'
+			set icon ''
+		case '*raspbian*'
+			set icon ''
+		case '*mint*'
+			set icon ''
+		case '*manjaro*'
+			set icon ''
+		case '*elementary*'
+			set icon ''
+		case '*fedora*'
+			set icon ''
+		case '*coreos*'
+			set icon ''
+		case '*gentoo*'
+			set icon ''
+		case '*centos*'
+			set icon ''
+		case '*mageia*'
+			set icon ''
+		case '*opensuse*' '*tumbleweed*'
+			set icon ''
+		case '*sabayon*'
+			set icon ''
+		case '*slackware*'
+			set icon ''
+		case '*alpine*'
+			set icon ''
+		case '*devuan*'
+			set icon ''
+		case '*redhat*'
+			set icon ''
+		case '*aosc*'
+			set icon ''
+		case '*nixos*'
+			set icon ''
+		case '*void*'
+			set icon ''
+		case '*artix*'
+			set icon ''
+		case '*'
+			set icon ''
 	end
 	echo $icon
 end
@@ -118,12 +142,18 @@ end
 function _os_icon -d 'Returns OS icon'
 	# Icons sauce: https://nerdfonts.com/cheat-sheet
 	switch (_os_type)
-		case linux-gnu;				set icon (_distro_icon)
-		case darwin;				set icon ''
-		case CYGWIN_NT-'*' MSYS_NT-'*';				set icon ''
-		case freebsd openbsd dragonfly;				set icon ''
-		case sunos;				set icon ''
-		case '*';				set icon ''
+		case linux-gnu
+			set icon (_distro_icon)
+		case darwin
+			set icon ''
+		case CYGWIN_NT-'*' MSYS_NT-'*'
+			set icon ''
+		case freebsd openbsd dragonfly
+			set icon ''
+		case sunos
+			set icon ''
+		case '*'
+			set icon ''
 	end
 	echo $icon
 end
