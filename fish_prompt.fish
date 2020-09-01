@@ -143,23 +143,23 @@ end
 # ░█▀▀░█▀▄░█░█░█░█░█▀▀░░█░░▀▀█
 # ░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░░▀▀▀
 
-# Distro/OS icon prompt
-function _icon_prompt -d 'Returns icon display'
-	set prompt_icon (set_color -b blue white)' '(_os_icon)' '
-	echo $prompt_icon
+# Distro/OS icon block
+function _block_icon -d 'Returns icon block'
+	set block (set_color -b blue white)' '(_os_icon)' '
+	echo $block
 end
 
-# SSH Prompt
-function _ssh_prompt -d 'Returns SSH display'
-	set prompt
+# SSH block
+function _block_ssh -d 'Returns SSH block'
+	set block
 	if set -q SSH_TTY
-		set prompt (set_color -b bryellow -o black)' SSH '
+		set block (set_color -b bryellow -o black)' SSH '
 	end
-	echo $prompt
+	echo $block
 end
 
-# user@host prompt
-function _user_host_prompt -d 'Returns username and hostname display'
+# user@host block
+function _block_user_host -d 'Returns username and hostname block'
 	set -l user_hostname $USER@(prompt_hostname)
 	if [ $USER = 'root' ]
 		set user_bg red
@@ -175,20 +175,20 @@ function _user_host_prompt -d 'Returns username and hostname display'
 		set user_hostname (set_color -o brblue)$USER(set_color -o brred)@(set_color -o brgreen)(prompt_hostname)
 	end
 
-	set prompt_user (set_color -b $user_bg -o black)' '$user_hostname' '
-	echo $prompt_user
+	set block (set_color -b $user_bg -o black)' '$user_hostname' '
+	echo $block
 end
 
-# PWD prompt
-function _pwd_prompt -d 'Returns PWD display'
+# PWD block
+function _block_pwd -d 'Returns PWD block'
 	# Check working directory if writable
 	if test -w $PWD
 		set pwd_color (_git_status)
 	else
 		set pwd_color red
 	end
-	set prompt_pwd (set_color -b black -o $pwd_color)' '(prompt_pwd)' '
-	echo $prompt_pwd
+	set block (set_color -b black -o $pwd_color)' '(prompt_pwd)' '
+	echo $block
 end
 
 # ░█░░░█▀▀░█▀▀░▀█▀░░░░░█░█░█▀█░█▀█░█▀▄░░░█▀█░█▀▄░█▀█░█▄█░█▀█░▀█▀
@@ -207,5 +207,5 @@ function fish_prompt
 	end
 
 	# Print right-hand prompt
-	printf '%s%s%s%s%s ' (_icon_prompt) (_ssh_prompt) (_user_host_prompt) (_pwd_prompt) (set_color normal)
+	printf '%s%s%s%s%s ' (_block_icon) (_block_ssh) (_block_user_host) (_block_pwd) (set_color normal)
 end

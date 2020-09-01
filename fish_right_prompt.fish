@@ -30,14 +30,14 @@ end
 # ░█▀▀░█▀▄░█░█░█░█░█▀▀░░█░░▀▀█
 # ░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░░▀▀▀
 
-# Time prompt
-function _time_prompt -d 'Returns time display'
-	set prompt_time (set_color -b (_time_bg) -o (_time_fg))' '(date +%H:%M)' '
-	echo $prompt_time
+# Time stamp block
+function _block_time_stamp -d 'Returns time stamp block'
+	set block (set_color -b (_time_bg) -o (_time_fg))' '(date +%H:%M)' '
+	echo $block
 end
 
-# Status prompt
-function _status_prompt -d 'Returns status display'
+# Status block
+function _block_status -d 'Returns status block'
 	if not test $prev_status -eq 0
 		set_color $fish_color_error
 		echo -n (set_color -b red yellow) '✘ '
@@ -47,24 +47,26 @@ function _status_prompt -d 'Returns status display'
 	set_color normal
 end
 
-function _git_prompt -d 'Returns Git display'
+# Git block
+function _block_git -d 'Returns Git block'
 	if [ (__fish_git_prompt) ]
 		set git_bg (_git_status)
-		set prompt (__fish_git_prompt) ' '
+		set block (__fish_git_prompt) ' '
 	else
 		set git_bg normal
-		set prompt (__fish_git_prompt)
+		set block (__fish_git_prompt)
 	end
-	echo (set_color -b $git_bg -o black) $prompt
+	echo (set_color -b $git_bg -o black) $block
 end
 
-function _private_prompt -d 'Returns private mode display'
+# Private mode block
+function _block_private -d 'Returns private mode block'
 	if  not test -z $fish_private_mode
-		set prompt (set_color -b black white) '﫸'
+		set block (set_color -b black white) '﫸'
 	else
-		set prompt
+		set block
 	end
-	echo $prompt
+	echo $block
 end
 
 # ░█▀▄░▀█▀░█▀▀░█░█░▀█▀░░░░░█░█░█▀█░█▀█░█▀▄░░░█▀█░█▀▄░█▀█░█▄█░█▀█░▀█▀
@@ -73,6 +75,6 @@ end
 
 # Right-hand prompt
 function fish_right_prompt -d 'Right-hand prompt'
-	printf '%s%s%s%s%s' (_status_prompt) (_git_prompt) (_time_prompt) (_private_prompt)
+	printf '%s%s%s%s%s' (_block_status) (_block_git) (_block_time_stamp) (_block_private)
 	set_color normal
 end
