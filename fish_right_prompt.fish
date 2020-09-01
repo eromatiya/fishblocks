@@ -49,12 +49,12 @@ end
 
 # Git block
 function _block_git -d 'Returns Git block'
-	if [ (__fish_git_prompt) ]
+	if [ (fish_git_prompt) ]
 		set git_bg (_git_status)
-		set block (__fish_git_prompt) ' '
+		set block (fish_git_prompt) ' '
 	else
 		set git_bg normal
-		set block (__fish_git_prompt)
+		set block (fish_git_prompt)
 	end
 	echo (set_color -b $git_bg -o black) $block
 end
