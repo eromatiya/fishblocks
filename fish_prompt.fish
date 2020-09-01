@@ -41,30 +41,6 @@ function _git_status -d 'Returns color based on the previous command status'
 	echo $git_color
 end
 
-# Set time background color
-function _time_bg -d 'Returns background color based on time'
-	set hour (date +%H)
-	if test $hour -ge 6 && test $hour -lt 12
-		echo brblue
-	else if test $hour -ge 12 && test $hour -lt 18
-		echo brgreen
-	else
-		echo brblack	
-	end
-end
-
-# Set time foreground color
-function _time_fg -d 'Returns foreground color based on time'
-	set hour (date +%H)
-	if test $hour -ge 6 && test $hour -lt 12
-		echo black
-	else if test $hour -ge 12 && test $hour -lt 18
-		echo black
-	else
-		echo white	
-	end
-end
-
 # OS type
 function _os_type -d 'Returns OS type'
 	set os_type ($SHELL -c "echo \$OSTYPE")
@@ -167,6 +143,12 @@ end
 # ░█▀▀░█▀▄░█░█░█░█░█▀▀░░█░░▀▀█
 # ░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░░▀▀▀
 
+# Distro/OS icon prompt
+function _icon_prompt -d 'Returns icon display'
+	set prompt_icon (set_color -b blue white)' '(_os_icon)' '
+	echo $prompt_icon
+end
+
 # SSH Prompt
 function _ssh_prompt -d 'Returns SSH display'
 	set prompt
@@ -174,18 +156,6 @@ function _ssh_prompt -d 'Returns SSH display'
 		set prompt (set_color -b bryellow -o black)' SSH '
 	end
 	echo $prompt
-end
-
-# Distro prompt
-function _distro_prompt -d 'Returns distro display'
-	set prompt_distro (set_color -b blue white)' '(_os_icon)' '
-	echo $prompt_distro
-end
-
-# Time prompt
-function _time_prompt -d 'Returns time display'
-	set prompt_time (set_color -b (_time_bg) -o (_time_fg))' '(date +%H:%M)' '
-	echo $prompt_time
 end
 
 # user@host prompt
@@ -221,43 +191,11 @@ function _pwd_prompt -d 'Returns PWD display'
 	echo $prompt_pwd
 end
 
-# Status prompt
-function _status_prompt -d 'Returns status display'
-	if not test $prev_status -eq 0
-		set_color $fish_color_error
-		echo -n (set_color -b red yellow) '✘ '
-	else
-		echo -n (set_color -b black green) '✔ '
-	end
-	set_color normal
-end
-
-function _git_prompt -d 'Returns Git display'
-	if [ (__fish_git_prompt) ]
-		set git_bg (_git_status)
-		set prompt (__fish_git_prompt) ' '
-	else
-		set git_bg normal
-		set prompt (__fish_git_prompt)
-	end
-	echo (set_color -b $git_bg -o black) $prompt
-end
-
-function _private_prompt -d 'Returns private mode display'
-	if  not test -z $fish_private_mode
-		set prompt (set_color -b black white) '﫸'
-	else
-		set prompt
-	end
-	echo $prompt
-end
-
 # ░█░░░█▀▀░█▀▀░▀█▀░░░░░█░█░█▀█░█▀█░█▀▄░░░█▀█░█▀▄░█▀█░█▄█░█▀█░▀█▀
 # ░█░░░█▀▀░█▀▀░░█░░▄▄▄░█▀█░█▀█░█░█░█░█░░░█▀▀░█▀▄░█░█░█░█░█▀▀░░█░
 # ░▀▀▀░▀▀▀░▀░░░░▀░░░░░░▀░▀░▀░▀░▀░▀░▀▀░░░░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░
 
-# Left-hand prompt
-function fish_prompt -d 'Left-hand prompt'
+function fish_prompt
 	set -g prev_status $status
 
 	# Window title
@@ -269,15 +207,5 @@ function fish_prompt -d 'Left-hand prompt'
 	end
 
 	# Print right-hand prompt
-	printf '%s%s%s%s%s ' (_distro_prompt) (_ssh_prompt) (_user_host_prompt) (_pwd_prompt) (set_color normal)
-end
-
-# ░█▀▄░▀█▀░█▀▀░█░█░▀█▀░░░░░█░█░█▀█░█▀█░█▀▄░░░█▀█░█▀▄░█▀█░█▄█░█▀█░▀█▀
-# ░█▀▄░░█░░█░█░█▀█░░█░░▄▄▄░█▀█░█▀█░█░█░█░█░░░█▀▀░█▀▄░█░█░█░█░█▀▀░░█░
-# ░▀░▀░▀▀▀░▀▀▀░▀░▀░░▀░░░░░░▀░▀░▀░▀░▀░▀░▀▀░░░░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░
-
-# Right-hand prompt
-function fish_right_prompt -d 'Right-hand prompt'
-	printf '%s%s%s%s%s' (_status_prompt) (_git_prompt) (_time_prompt) (_private_prompt)
-	set_color normal
+	printf '%s%s%s%s%s ' (_icon_prompt) (_ssh_prompt) (_user_host_prompt) (_pwd_prompt) (set_color normal)
 end

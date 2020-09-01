@@ -3,7 +3,7 @@ A dead simple fishshell prompt.
 
 | Fishblocks Preview |
 | --- |
-| ![Preview](fishblock.gif) |
+| ![Preview](scrot.webp) |
 
 ## Dependencies
 
@@ -14,17 +14,19 @@ A dead simple fishshell prompt.
 ## Usage
 
 + Install the dependencies.
-+ Clone this repository.
-+ Copy `fish_prompt.fish` to `/PATH/TO/FISH/CONFIG/functions/`
++ Clone.
++ Copy the repository's content to `/PATH/TO/FISH/CONFIG/functions/`.
 
 ## Features
 
-+ Shows incognito icon if in private mode.
++ Fast!
++ OS/Distribution icon display.
++ Private mode display.
 + SSH display.
 + Git display with color coding.
 + Previous command status display.
 + Dynamic background color for time display.
-+ OS/Distribution icon display. (Tested only on Archlinux. Feedbacks welcome!)
++ And many more.
 
 ## Extras
 
@@ -76,8 +78,7 @@ The roadmap for this project. PRs are welcome!
 
 + [ ] Test OS/Distribution icon display on different distros and platforms.
 + [ ] Improve Git display.
-+ [ ] Refactor/Modularized fish prompt script.
-+ [ ] Oh My Fish.
++ [x] Refactor/Modularized fish prompt script.
 
 ## Contribute
 
