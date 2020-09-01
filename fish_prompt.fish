@@ -139,9 +139,9 @@ function _os_icon -d 'Returns OS icon'
 	echo $icon
 end
 
-# ░█▀█░█▀▄░█▀█░█▄█░█▀█░▀█▀░█▀▀
-# ░█▀▀░█▀▄░█░█░█░█░█▀▀░░█░░▀▀█
-# ░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░░▀▀▀
+# ░█▀▄░█░░░█▀█░█▀▀░█░█░█▀▀
+# ░█▀▄░█░░░█░█░█░░░█▀▄░▀▀█
+# ░▀▀░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 
 # Distro/OS icon block
 function _block_icon -d 'Returns icon block'

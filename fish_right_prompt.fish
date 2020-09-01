@@ -1,38 +1,10 @@
-# ░█░█░█▀▀░█░░░█▀█░█▀▀░█▀▄░█▀▀
-# ░█▀█░█▀▀░█░░░█▀▀░█▀▀░█▀▄░▀▀█
-# ░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀░▀░▀░▀▀▀
-
-# Set time background color
-function _time_bg -d 'Returns background color based on time'
-	set hour (date +%H)
-	if test $hour -ge 6 && test $hour -lt 12
-		echo brblue
-	else if test $hour -ge 12 && test $hour -lt 18
-		echo brgreen
-	else
-		echo brblack	
-	end
-end
-
-# Set time foreground color
-function _time_fg -d 'Returns foreground color based on time'
-	set hour (date +%H)
-	if test $hour -ge 6 && test $hour -lt 12
-		echo black
-	else if test $hour -ge 12 && test $hour -lt 18
-		echo black
-	else
-		echo white	
-	end
-end
-
 # ░█▀█░█▀▄░█▀█░█▄█░█▀█░▀█▀░█▀▀
 # ░█▀▀░█▀▄░█░█░█░█░█▀▀░░█░░▀▀█
 # ░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░░▀▀▀
 
 # Time stamp block
 function _block_time_stamp -d 'Returns time stamp block'
-	set block (set_color -b (_time_bg) -o (_time_fg))' '(date +%H:%M)' '
+	set block (set_color -b brcyan -o black)' '(date +%H:%M)' '
 	echo $block
 end
 
