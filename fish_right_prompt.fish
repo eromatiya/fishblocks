@@ -10,7 +10,7 @@ end
 
 # Status block
 function _block_status -d 'Returns status block'
-	if not test $prev_status -eq 0
+	if not test $PREV_CMD_STATUS -eq 0
 		set_color $fish_color_error
 		echo -n (set_color -b red yellow) '✘ '
 	else
@@ -47,6 +47,8 @@ end
 
 # Right-hand prompt
 function fish_right_prompt -d 'Right-hand prompt'
+	set -g PREV_CMD_STATUS $status
+
 	# Print left-hand prompt
 	echo -ne (_block_status)(_block_git)(_block_time_stamp)(_block_private)(set_color normal)
 end

@@ -196,8 +196,6 @@ end
 # ░▀▀▀░▀▀▀░▀░░░░▀░░░░░░▀░▀░▀░▀░▀░▀░▀▀░░░░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░
 
 function fish_prompt
-	set -g prev_status $status
-
 	# Window title
 	switch $TERM;
 		case xterm'*' vte'*';
