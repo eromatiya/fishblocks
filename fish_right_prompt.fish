@@ -1,6 +1,6 @@
-# ░█▀█░█▀▄░█▀█░█▄█░█▀█░▀█▀░█▀▀
-# ░█▀▀░█▀▄░█░█░█░█░█▀▀░░█░░▀▀█
-# ░▀░░░▀░▀░▀▀▀░▀░▀░▀░░░░▀░░▀▀▀
+# ░█▀▄░█░░░█▀█░█▀▀░█░█░█▀▀
+# ░█▀▄░█░░░█░█░█░░░█▀▄░▀▀█
+# ░▀▀░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 
 # Time stamp block
 function _block_time_stamp -d 'Returns time stamp block'
@@ -23,7 +23,7 @@ end
 function _block_git -d 'Returns Git block'
 	if [ (fish_git_prompt) ]
 		set git_bg (_git_status)
-		set block (fish_git_prompt) ' '
+		set block (fish_git_prompt)'  '
 	else
 		set git_bg normal
 		set block (fish_git_prompt)
@@ -47,6 +47,6 @@ end
 
 # Right-hand prompt
 function fish_right_prompt -d 'Right-hand prompt'
-	printf '%s%s%s%s%s' (_block_status) (_block_git) (_block_time_stamp) (_block_private)
-	set_color normal
+	# Print left-hand prompt
+	echo -ne (_block_status)(_block_git)(_block_time_stamp)(_block_private)(set_color normal)
 end

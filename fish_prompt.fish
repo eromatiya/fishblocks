@@ -43,7 +43,7 @@ end
 
 # OS type
 function _os_type -d 'Returns OS type'
-	set os_type ($SHELL -c "echo \$OSTYPE")
+	set os_type (sh -c "echo \$OSTYPE")
 	echo $os_type
 end
 
@@ -201,11 +201,11 @@ function fish_prompt
 	# Window title
 	switch $TERM;
 		case xterm'*' vte'*';
-			printf '\033]0;[ '(prompt_pwd)' ]\007';
+			echo -ne '\033]0;[ '(prompt_pwd)' ]\007';
 		case screen'*';
-			printf '\033k[ '(prompt_pwd)' ]\033\\';
+			echo -ne '\033k[ '(prompt_pwd)' ]\033\\';
 	end
 
 	# Print right-hand prompt
-	printf '%s%s%s%s%s ' (_block_icon) (_block_ssh) (_block_user_host) (_block_pwd) (set_color normal)
+	echo (_block_icon)(_block_ssh)(_block_user_host)(_block_pwd)(set_color normal)' '
 end

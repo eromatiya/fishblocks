@@ -1,4 +1,4 @@
 function fish_title
 	# Customize terminal window title
-	printf '[ '(prompt_pwd)' ]';
+	echo -ne '[ '(prompt_pwd)' ]';
 end
