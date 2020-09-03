@@ -10,28 +10,30 @@
 # ░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀░▀░▀░▀▀▀
 
 # Is git dirty?
-function _git_dirty -d 'Checks if git is dirty'
-	echo (command git status -s --ignore-submodules=dirty ^/dev/null)
+function _git_dirty -d 'Checks whether or not the current branch has tracked, modified files'
+	not git diff --no-ext-diff --quiet --exit-code 2>/dev/null && echo 0
 end
 
 # Is git has untracked files?
-function _git_untracked -d 'Checks if git has untracked files'
-	echo (command git status -s --ignore-submodules=untracked ^/dev/null)
+function _git_untracked -d 'Checks whether or not the current repository has untracked files'
+	command git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- :/ >/dev/null 2>&1 &&
+		echo 0
 end
 
 # Is PWD a git directory?
-function _git_directory -d 'Checks if $PWD is a git repository'
-	if git rev-parse --git-dir > /dev/null 2>&1
-		echo 0
-	end
+function _git_directory -d 'Checks whether or not the current directory is a or part of a git repository'
+	set -l repo_info (command git rev-parse --git-dir --is-inside-git-dir --is-bare-repository --is-inside-work-tree HEAD 2>/dev/null)
+	echo $repo_info
 end
 
 # Set git status color
 function _git_status -d 'Returns color based on the previous command status'
 	if [ (_git_directory) ]
 		# Check if dirty
-		if [ (_git_dirty) ] || [ (_git_untracked) ]
+		if [ (_git_dirty) ]
 			set git_color yellow
+		else if [ (_git_untracked) ]
+			set git_color brgreen
 		else
 			set git_color green
 		end

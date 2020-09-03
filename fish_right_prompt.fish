@@ -4,19 +4,18 @@
 
 # Time stamp block
 function _block_time_stamp -d 'Returns time stamp block'
-	set block (set_color -b brcyan -o black)' '(date +%H:%M)' '
+	set block (set_color -b brcyan -o black)' '(date +%H:%M:%S)' '
 	echo $block
 end
 
 # Status block
 function _block_status -d 'Returns status block'
-	if not test $PREV_CMD_STATUS -eq 0
-		set_color $fish_color_error
-		echo -n (set_color -b red yellow) '✘ '
+	if not test $status -eq 0
+		set block (set_color -b red yellow)' ✘ '
 	else
-		echo -n (set_color -b black green) '✔ '
+		set block (set_color -b black green)' ✔ '
 	end
-	set_color normal
+	echo $block
 end
 
 # Git block
@@ -34,7 +33,7 @@ end
 # Private mode block
 function _block_private -d 'Returns private mode block'
 	if  not test -z $fish_private_mode
-		set block (set_color -b black white) '﫸'
+		set block (set_color -b black white)' 﫸'
 	else
 		set block
 	end
@@ -47,8 +46,5 @@ end
 
 # Right-hand prompt
 function fish_right_prompt -d 'Right-hand prompt'
-	set -g PREV_CMD_STATUS $status
-
-	# Print left-hand prompt
 	echo -ne (_block_status)(_block_git)(_block_time_stamp)(_block_private)(set_color normal)
 end
