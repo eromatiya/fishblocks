@@ -21,7 +21,7 @@ end
 # Git block
 function _block_git -d 'Returns Git block'
 	if [ (fish_git_prompt) ]
-		set git_bg (_git_status)
+		set git_bg (_fishblocks_git_status)
 		set block (fish_git_prompt)'  '
 	else
 		set git_bg normal

@@ -10,30 +10,29 @@
 # ░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀░▀░▀░▀▀▀
 
 # Is git dirty?
-function _git_dirty -d 'Checks whether or not the current branch has tracked, modified files'
+function _fishblocks_git_dirty -d 'Checks whether or not the current branch has tracked, modified files'
 	not git diff --no-ext-diff --quiet --exit-code 2>/dev/null && echo 0
 end
 
 # Is git has untracked files?
-function _git_untracked -d 'Checks whether or not the current repository has untracked files'
+function _fishblocks_git_untracked -d 'Checks whether or not the current repository has untracked files'
 	command git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- :/ >/dev/null 2>&1 &&
 		echo 0
 end
 
 # Is PWD a git directory?
-function _git_directory -d 'Checks whether or not the current directory is a or part of a git repository'
+function _fishblocks_git_directory -d 'Checks whether or not the current directory is a or part of a git repository'
 	set -l repo_info (command git rev-parse --git-dir --is-inside-git-dir --is-bare-repository --is-inside-work-tree HEAD 2>/dev/null)
 	echo $repo_info
 end
 
 # Set git status color
-function _git_status -d 'Returns color based on the previous command status'
-	if [ (_git_directory) ]
-		# Check if dirty
-		if [ (_git_dirty) ]
-			set git_color yellow
-		else if [ (_git_untracked) ]
+function _fishblocks_git_status -d 'Returns color based on the previous command status'
+	if [ (_fishblocks_git_directory) ]
+		if [ (_fishblocks_git_untracked) ] &&  not [ (_fishblocks_git_dirty) ]
 			set git_color brgreen
+		else if [ (_fishblocks_git_dirty) ]
+			set git_color yellow
 		else
 			set git_color green
 		end
@@ -44,13 +43,13 @@ function _git_status -d 'Returns color based on the previous command status'
 end
 
 # OS type
-function _os_type -d 'Returns OS type'
+function _fishblocks_os_type -d 'Returns OS type'
 	set os_type (sh -c "echo \$OSTYPE")
 	echo $os_type
 end
 
 # Distro name
-function _distro_name -d 'Returns linux distribution name'
+function _fishblocks_distro_name -d 'Returns linux distribution name'
 	set distro_name
 	if test -z $distro_name && test -r /etc/os-release
 		set distro_name (awk -F '=' '$1=="ID" { print $2 ;}' /etc/os-release)
@@ -69,8 +68,8 @@ function _distro_name -d 'Returns linux distribution name'
 end
 
 # Distro icon
-function _distro_icon -d 'Returns linux distribution icon'
-	switch (_distro_name)
+function _fishblocks_distro_icon -d 'Returns linux distribution icon'
+	switch (_fishblocks_distro_name)
 		case '*arch*'
 			set icon ''
 		case '*debian*'
@@ -122,11 +121,11 @@ function _distro_icon -d 'Returns linux distribution icon'
 end
 
 # OS icon
-function _os_icon -d 'Returns OS icon'
+function _fishblocks_os_icon -d 'Returns OS icon'
 	# Icons sauce: https://nerdfonts.com/cheat-sheet
-	switch (_os_type)
+	switch (_fishblocks_os_type)
 		case linux-gnu
-			set icon (_distro_icon)
+			set icon (_fishblocks_distro_icon)
 		case darwin
 			set icon ''
 		case CYGWIN_NT-'*' MSYS_NT-'*'
@@ -147,7 +146,7 @@ end
 
 # Distro/OS icon block
 function _block_icon -d 'Returns icon block'
-	set block (set_color -b blue white)' '(_os_icon)' '
+	set block (set_color -b blue white)' '(_fishblocks_os_icon)' '
 	echo $block
 end
 
@@ -185,7 +184,7 @@ end
 function _block_pwd -d 'Returns PWD block'
 	# Check working directory if writable
 	if test -w $PWD
-		set pwd_color (_git_status)
+		set pwd_color (_fishblocks_git_status)
 	else
 		set pwd_color red
 	end
